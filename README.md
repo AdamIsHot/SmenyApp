@@ -1,1 +1,1 @@
-# personal_code
+# SměnyApp
