@@ -32,37 +32,52 @@ var yr = date.getFullYear();
 
 function nameOfNewList(month, yr) {
   var activeSpreadsheet = SpreadsheetApp.   getActiveSpreadsheet();
-    var yourNewSheet = activeSpreadsheet.getSheetByName(month + " " + yr);
-    if (yourNewSheet != null) {
-        activeSpreadsheet.deleteSheet(yourNewSheet);
-    }
-    yourNewSheet = activeSpreadsheet.insertSheet();
-    yourNewSheet.setName(month + " " + yr)
+  var yourNewSheet = activeSpreadsheet.getSheetByName(month + " " + yr);
+  if (yourNewSheet != null) {
+    activeSpreadsheet.deleteSheet(yourNewSheet);
+  }
+  yourNewSheet = activeSpreadsheet.insertSheet();
+  yourNewSheet.setName(month + " " + yr)
  
-String = [month + " " + yr];
+  String = [month + " " + yr];
   var sheet = SpreadsheetApp.getActive().getSheetByName(String);
   sheet.activate();
 
+  sheet.setRowHeight(1, 42);
+  sheet.setColumnWidth(1, 200);
+  sheet.setColumnWidth(2, 60);
+  sheet.setColumnWidth(3, 90);
+  sheet.setColumnWidth(4, 90);
+  sheet.setColumnWidth(5, 90);
+  sheet.setColumnWidth(6, 90);
 
-sheet.setRowHeight(1, 42);
-sheet.setColumnWidth(1, 200);
-sheet.setColumnWidth(2, 60);
-sheet.setColumnWidth(3, 90);
-sheet.setColumnWidth(4, 90);
-sheet.setColumnWidth(5, 90);
-sheet.setColumnWidth(6, 90);
+  //fialova
+  creatingCells("B2", "#9900ff", "", String);
 
-var cell = sheet.getRange("B2");
-cell.setBackground("#9900ff");
-var cell = sheet.getRange("C2");
-cell.setBackground("#3c78d8");
-var cell = sheet.getRange("D2");
-cell.setBackground("#3c78d8");
-var cell = sheet.getRange("E2");
-cell.setBackground("#3c78d8");
-var cell = sheet.getRange("F2");
-cell.setBackground("#3c78d8");
+  //modry
+  creatingCells("C2", "#3c78d8", "datum směny", String);
+  creatingCells("D2", "#3c78d8", "čas směny", String);
+  creatingCells("E2", "#3c78d8", "počet hodin", String);
+  creatingCells("F2", "#3c78d8", "výplata", String);
 
-var cell = sheet.getRange("B3");
-cell.setBackground("#cc0000");
-} 
+  //cervena
+  creatingCells("B3", "#cc0000", "celkově:", String);
+
+  //dolni radek
+  creatingCells("C3", "#b4a7d6", "0", String);
+  creatingCells("D3", "#8e7cc3", "0", String);
+  creatingCells("E3", "#b4a7d6", "0", String);
+  creatingCells("F3", "#8e7cc3", "0", String);
+}
+
+  
+
+function creatingCells(name, color, text, String) {
+  var sheet = SpreadsheetApp.getActive().getSheetByName(String);
+  sheet.activate();
+  var cell = sheet.getRange(name);
+  cell.setBackground(color);
+  var textInCell = cell.setFontWeight("bold");
+  cell.setValue(text);
+  cell.setBorder(true, true, true, true, false, false, "black", SpreadsheetApp.SOLID_THICK);
+}
